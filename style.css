@@ -1,0 +1,366 @@
+* {
+  padding: 0;
+  margin: 0;
+  outline: none;
+  border: none;
+  box-sizing: border-box;
+}
+
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  background-color: white;
+  --font-blue-active: rgba(52, 122, 226, 1);
+  --font-blue-inactive: rgba(124, 141, 181, 1);
+  --font-blue-inactive-spread: rgba(124, 141, 181, 0.12);
+  --border: rgba(230, 237, 255, 1);
+  --font-red: #ff3b30;
+  --grey: rgba(42, 46, 51, 1);
+}
+
+body {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+}
+
+.sidebar {
+  width: 20%;
+  height: 100%;
+  padding: 3em 0 1em;
+}
+
+.title {
+  display: flex;
+  justify-content: flex-start;
+  gap: 0.2em;
+  padding-left: 25%;
+  font-size: 20px;
+  align-items: center;
+}
+.title p {
+  padding-bottom: 0.15em;
+}
+
+.sub-sidebar {
+  margin-top: 1em;
+  padding: 2em 0 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  height: 90%;
+  border-right: 1px solid var(--border);
+}
+
+.choice-tab {
+  width: 100%;
+  overflow: hidden;
+}
+
+.choice-child {
+  width: 100%;
+  padding-left: 25%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.5em;
+  color: rgba(124, 141, 181, 1);
+  background: white;
+  margin-bottom: 1.5em;
+  cursor: pointer;
+  transition: 500ms all;
+}
+.choice-child:last-child {
+  margin-bottom: 0;
+}
+.choice-child svg {
+  transition: 500ms all;
+}
+.choice-child svg path {
+  fill: rgba(124, 141, 181, 1);
+}
+
+.choice-child.active {
+  color: var(--font-blue-active);
+}
+
+.choice-child.active svg path {
+  fill: var(--font-blue-active);
+}
+
+.choice-child span {
+  font-size: 16px;
+}
+.choice-child::before {
+  content: "";
+  position: absolute;
+  right: -1em;
+  transition: 500ms all;
+  width: 4px;
+  border-radius: 5px;
+  height: 80%;
+  background: var(--font-blue-inactive);
+}
+
+.choice-child.active::before {
+  right: -0.5px;
+  background: var(--font-blue-active);
+}
+
+.option-child {
+  width: 100%;
+  padding-left: 25%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.5em;
+  color: rgba(124, 141, 181, 1);
+  background: white;
+  margin-bottom: 1.3em;
+  cursor: pointer;
+  transition: 500ms all;
+}
+
+.option-child:last-child {
+  color: var(--font-red);
+}
+.option-child:first-child span:last-child {
+  padding-bottom: 0.2em;
+}
+
+.option-child span {
+  font-size: 16px;
+}
+
+.home {
+  width: 80%;
+  height: 100%;
+  overflow-y: scroll;
+  padding-top: 3em;
+}
+.home::-webkit-scrollbar {
+  width: 9px;
+}
+.home::-webkit-scrollbar-thumb {
+  border-radius: 7px;
+  background-color: transparent;
+}
+.home:hover::-webkit-scrollbar-thumb {
+  border-radius: 7px;
+  background-color: rgba(0, 0, 0, 0.35);
+}
+
+header {
+  padding: 0 2em;
+  display: flex;
+  background: white;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+header p span {
+  display: block;
+}
+
+header p span:first-child {
+  font-size: 28px;
+}
+
+header p span:last-child {
+  font-size: 16px;
+  color: var(--font-blue-inactive);
+}
+
+header .right {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  gap: 0.85em;
+}
+
+header .right .user {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transform: translateY(-3px);
+  gap: 0.4em;
+}
+
+header .right .user img {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-position: center;
+  object-fit: cover;
+}
+
+header .right p {
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.details {
+  width: 65%;
+  height: 9em;
+  margin: 2em auto 1.5em;
+  display: flex;
+  align-items: center;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  padding: 1.4em 1.5em;
+}
+
+.details-card {
+  border-right: 1px solid var(--border);
+  padding: 0 5%;
+}
+
+.details-card:nth-child(2) {
+  padding: 0 6% 0 5%;
+}
+
+.details-card:nth-child(3) {
+  border: none;
+  padding: 0 6% 0 5.5%;
+}
+
+.details-card .details-value span:first-child {
+  font-size: 28px;
+  margin-right: 2em;
+  font-weight: 600;
+  color: #000c;
+}
+
+.details-card .details-time {
+  padding-top: 0.5em;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  color: var(--font-blue-inactive);
+}
+
+.details-card .details-time span:first-child svg {
+  transform: translateY(2px);
+  margin-right: 4px;
+}
+
+.details-card .details-time span:last-child {
+  margin-left: 8px;
+}
+
+/*--------------------------------------------*/
+/*Permet de gerer les graphes */
+
+.graphs {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1em;
+  padding: 0 2em;
+}
+
+.chart {
+  width: 67.5%;
+  height: 350px;
+  position: relative;
+  padding: 2.2em 1.25em 1.5em;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+.chart .title {
+  position: absolute;
+  font-size: 20px;
+  font-weight: 600;
+  color: #000c;
+  top: 0.6em;
+  left: -9em;
+}
+
+.bar {
+  width: 32.5%;
+  height: 350px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+.bar-top {
+  width: 100%;
+  height: 4em;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  padding: 0 1em;
+  gap: 2em;
+}
+
+.bar-button {
+  display: flex;
+  height: 2.6em;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  background: white;
+  align-items: center;
+  justify-content: center;
+  padding: 0 1em;
+  gap: 1em;
+  color: var(--grey);
+  cursor: pointer;
+}
+
+.bar-bottom {
+  width: 100%;
+  height: 270px;
+  padding: 1.5em 1em 1em;
+}
+
+/*--------------------------------------------*/
+
+.anomalies {
+  width: 100%;
+  padding: 1em 2em;
+}
+
+.anomalies-tab {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  width: 100%;
+}
+
+
+.anomalies-tab{
+  padding: 1em 2em;
+}
+
+.anomalies-tab .head{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.anomalies-tab .head p{
+  font-size: 20px;
+  font-weight: 600;
+  color: #000c;
+}
+
+.anomalies-tab .head .but-style{
+  padding: 0.25em 1em;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1em;
+  box-shadow: 0 2px 10px 0 var(--font-blue-inactive-spread);
+  background: white;
+}
+
+.anomalies-tab .head .but-style span:first-child{
+  padding-bottom: 0.15em;
+}
