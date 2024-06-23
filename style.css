@@ -204,8 +204,14 @@ header .right p {
   cursor: pointer;
 }
 
+.d {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
 .details {
-  width: 65%;
+  min-width: 70%;
   height: 9em;
   margin: 2em auto 1.5em;
   display: flex;
@@ -266,7 +272,7 @@ header .right p {
 }
 
 .chart {
-  width: 67.5%;
+  width: 65%;
   height: 350px;
   position: relative;
   padding: 2.2em 1.25em 1.5em;
@@ -284,7 +290,7 @@ header .right p {
 }
 
 .bar {
-  width: 32.5%;
+  width: 35%;
   height: 350px;
   border: 1px solid var(--border);
   border-radius: 12px;
@@ -317,7 +323,7 @@ header .right p {
 .bar-bottom {
   width: 100%;
   height: 270px;
-  padding: 1.5em 1em 1em;
+  padding: 1.5em 0.1em 1em;
 }
 
 /*--------------------------------------------*/
@@ -333,26 +339,26 @@ header .right p {
   width: 100%;
 }
 
-
-.anomalies-tab{
+.anomalies-tab {
   padding: 1em 2em;
 }
 
-.anomalies-tab .head{
+.anomalies-tab .head {
   width: 100%;
   display: flex;
   justify-content: space-between;
 }
 
-.anomalies-tab .head p{
+.anomalies-tab .head p {
   font-size: 20px;
   font-weight: 600;
   color: #000c;
 }
 
-.anomalies-tab .head .but-style{
+.anomalies-tab .head .but-style {
   padding: 0.25em 1em;
   border-radius: 8px;
+  cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -361,6 +367,79 @@ header .right p {
   background: white;
 }
 
-.anomalies-tab .head .but-style span:first-child{
+.anomalies-tab .head .but-style span:first-child {
   padding-bottom: 0.15em;
+}
+
+.table {
+  padding-top: 1.25em;
+  width: 100%;
+}
+
+.table table {
+  width: 100%;
+}
+
+table th {
+  padding: 1em 0;
+  font-size: 1em;
+  font-weight: 500;
+  color: var(--primary-color);
+  border-bottom: 1px solid var(--border);
+}
+
+
+table td {
+  padding: 1em 0;
+  font-size: 0.85em;
+  color: var(--primary-color);
+  border-bottom: 1px solid var(--border);
+  text-align: center;
+}
+
+table tr:last-child td{
+  border-bottom: none;
+}
+
+
+/*-----------------------------------------------*/
+
+.graph{
+  width: 100%;
+  display: flex;
+  padding: 0 1.5em;
+  margin-bottom: 2em;
+  gap: 1em;
+  justify-content: space-between;
+  align-items: start;
+}
+
+.graph .left{
+  padding-top: 2em;
+  width: 65%;
+}
+
+.graph .left .chart{
+  width: 100%;
+}
+
+.graph .left .chart:last-child{
+  margin-top: 1.5em;
+}
+
+.graph .right{
+  padding-top: 2em;
+  width: 35%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2em;
+}
+
+
+.graph .right .details-card{
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.75em 3em;
+
 }

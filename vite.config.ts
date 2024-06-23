@@ -6,7 +6,9 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: resolve(__dirname, "index.html"),
-        sucess: resolve(__dirname, "succes.html"),
+        filtering: resolve(__dirname, "filtering.html"),
+        fan: resolve(__dirname, "fan.html"),
+        feeder: resolve(__dirname, "feeder.html"),
       },
     },
   },
