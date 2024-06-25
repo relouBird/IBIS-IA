@@ -10,7 +10,7 @@ let roundLikeYouThink = (numb: number, times: number): string => {
 };
 
 // recuperer les données ici....
-fetch("http://localhost:5500/anomalies")
+fetch("http://localhost:8000/anomalies")
   .then((data) => data.json())
   .then((r) => {
     let datas: anomaliesData[] = r;
@@ -31,7 +31,7 @@ fetch("http://localhost:5500/anomalies")
     });
   });
 
-fetch("http://localhost:5500/rms_data")
+fetch("http://localhost:8000/rms_data")
   .then((data) => data.json())
   .then((r) => {
     let datas: resultData[] = r;

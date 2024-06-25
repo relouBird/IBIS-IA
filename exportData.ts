@@ -17,7 +17,7 @@ export let GraphData = async (): Promise<GraphDataType> => {
   let DifferentialPressureData: number[] = [];
 
   // recuperer les données ici....
-   await fetch("http://localhost:5500/rms_data")
+   await fetch("http://localhost:8000/rms_data")
     .then((data) => data.json())
     .then((r) => {
       let datas: resultData[] = r;
