@@ -1,0 +1,200 @@
+{
+    "anomalies": [
+        {
+            "id": 1,
+            "date": "2018-01-01",
+            "timestamp": "17:59:07",
+            "variable": "pressure",
+            "valeur_predite": 0.22613031789660454,
+            "valeur_lue": 2.22613031789660454,
+            "difference": 2.0010000111011111,
+            "seuil": 0.5,
+            "taux_changement": 1.8654212442448878,
+            "rul": 3.498743764846579989765
+        },
+        {
+            "id": 2,
+            "date": "2018-02-15",
+            "timestamp": "14:23:45",
+            "variable": "Motor Current Feeder",
+            "valeur_predite": 0.5123487619023456,
+            "valeur_lue": 1.5123487619023456,
+            "difference": 1.0000000000000002,
+            "seuil": 0.5,
+            "taux_changement": 1.7893423456782345,
+            "rul": 2.4879347598347598
+        },
+        {
+            "id": 3,
+            "date": "2018-03-10",
+            "timestamp": "09:12:33",
+            "variable": "Motor Current Fan",
+            "valeur_predite": 0.3478902347098702,
+            "valeur_lue": 1.3478902347098702,
+            "difference": 1.0000000000000002,
+            "seuil": 0.5,
+            "taux_changement": 1.5768923456767342,
+            "rul": 4.238976324873487
+        },
+        {
+            "id": 4,
+            "date": "2018-04-22",
+            "timestamp": "21:47:59",
+            "variable": "Pressure",
+            "valeur_predite": 0.8765432187643218,
+            "valeur_lue": 2.8765432187643218,
+            "difference": 2.0000000000000004,
+            "seuil": 0.5,
+            "taux_changement": 1.9347653486548765,
+            "rul": 3.8792345982349875
+        },
+        {
+            "id": 5,
+            "date": "2018-05-30",
+            "timestamp": "12:35:47",
+            "variable": "Motor Current Feeder",
+            "valeur_predite": 0.2234567890123456,
+            "valeur_lue": 1.2234567890123456,
+            "difference": 1.0000000000000002,
+            "seuil": 0.5,
+            "taux_changement": 1.6789234567876543,
+            "rul": 2.573498759834573
+        },
+        {
+            "id": 6,
+            "date": "2018-06-14",
+            "timestamp": "07:58:19",
+            "variable": "Motor Current Fan",
+            "valeur_predite": 0.5654321789654321,
+            "valeur_lue": 1.5654321789654321,
+            "difference": 1.0000000000000002,
+            "seuil": 0.5,
+            "taux_changement": 1.876543297654321,
+            "rul": 4.123987659823495
+        },
+        {
+            "id": 7,
+            "date": "2018-07-28",
+            "timestamp": "10:29:53",
+            "variable": "Pressure",
+            "valeur_predite": 0.4321876543218765,
+            "valeur_lue": 2.4321876543218765,
+            "difference": 2.0000000000000004,
+            "seuil": 0.5,
+            "taux_changement": 1.7987654345674321,
+            "rul": 3.4569872345783456
+        }
+        
+    ]
+    ,
+    "rms_data": [
+        {
+            "date": "2024-06-24",
+            "timestamp": "17:59:07",
+            "courant_moteur1_rms": 131.4684888765,
+            "courant_moteur2_rms": 2.8488876577,
+            "charge_moteur1_rms": 131.4684888765,
+            "charge_moteur2_rms": 2.8488876577,
+            "env_temperature_rms": 29.874576767,
+            "inlet_temperature_rms": 65.4857645424,
+            "outlet_temperature_rms": 65.4857645424,
+            "inlet_pressure_rms": 65.4857645424,
+            "outlet_pressure_rms": 65.4857645424,
+            "humidite_rms": 81.75467985767,
+            "pression_rms": 23.1944475757
+        },
+        {
+            "date": "2024-06-25",
+            "timestamp": "10:15:42",
+            "courant_moteur1_rms": 132.3584765432,
+            "courant_moteur2_rms": 3.1234567890,
+            "charge_moteur1_rms": 132.3584765432,
+            "charge_moteur2_rms": 3.1234567890,
+            "env_temperature_rms": 30.1234567890,
+            "inlet_temperature_rms": 66.1234567890,
+            "outlet_temperature_rms": 66.1234567890,
+            "inlet_pressure_rms": 66.1234567890,
+            "outlet_pressure_rms": 66.1234567890,
+            "humidite_rms": 82.1234567890,
+            "pression_rms": 24.1234567890
+        },
+        {
+            "date": "2024-06-26",
+            "timestamp": "08:45:33",
+            "courant_moteur1_rms": 133.4678543210,
+            "courant_moteur2_rms": 2.7654321987,
+            "charge_moteur1_rms": 133.4678543210,
+            "charge_moteur2_rms": 2.7654321987,
+            "env_temperature_rms": 28.9876543210,
+            "inlet_temperature_rms": 64.9876543210,
+            "outlet_temperature_rms": 64.9876543210,
+            "inlet_pressure_rms": 64.9876543210,
+            "outlet_pressure_rms": 64.9876543210,
+            "humidite_rms": 80.9876543210,
+            "pression_rms": 22.9876543210
+        },
+        {
+            "date": "2024-06-27",
+            "timestamp": "14:12:58",
+            "courant_moteur1_rms": 134.5678901234,
+            "courant_moteur2_rms": 3.2345678901,
+            "charge_moteur1_rms": 134.5678901234,
+            "charge_moteur2_rms": 3.2345678901,
+            "env_temperature_rms": 29.8765432109,
+            "inlet_temperature_rms": 65.8765432109,
+            "outlet_temperature_rms": 65.8765432109,
+            "inlet_pressure_rms": 65.8765432109,
+            "outlet_pressure_rms": 65.8765432109,
+            "humidite_rms": 81.8765432109,
+            "pression_rms": 23.8765432109
+        },
+        {
+            "date": "2024-06-28",
+            "timestamp": "18:29:11",
+            "courant_moteur1_rms": 135.6789012345,
+            "courant_moteur2_rms": 2.4567890123,
+            "charge_moteur1_rms": 135.6789012345,
+            "charge_moteur2_rms": 2.4567890123,
+            "env_temperature_rms": 30.9876543211,
+            "inlet_temperature_rms": 66.9876543211,
+            "outlet_temperature_rms": 66.9876543211,
+            "inlet_pressure_rms": 66.9876543211,
+            "outlet_pressure_rms": 66.9876543211,
+            "humidite_rms": 82.9876543211,
+            "pression_rms": 24.9876543211
+        },
+        {
+            "date": "2024-06-29",
+            "timestamp": "12:04:22",
+            "courant_moteur1_rms": 136.7890123456,
+            "courant_moteur2_rms": 3.5678901234,
+            "charge_moteur1_rms": 136.7890123456,
+            "charge_moteur2_rms": 3.5678901234,
+            "env_temperature_rms": 31.0987654321,
+            "inlet_temperature_rms": 67.0987654321,
+            "outlet_temperature_rms": 67.0987654321,
+            "inlet_pressure_rms": 67.0987654321,
+            "outlet_pressure_rms": 67.0987654321,
+            "humidite_rms": 83.0987654321,
+            "pression_rms": 25.0987654321
+        },
+        {
+            "date": "2024-06-30",
+            "timestamp": "16:47:39",
+            "courant_moteur1_rms": 137.8901234567,
+            "courant_moteur2_rms": 2.6789012345,
+            "charge_moteur1_rms": 137.8901234567,
+            "charge_moteur2_rms": 2.6789012345,
+            "env_temperature_rms": 32.1098765432,
+            "inlet_temperature_rms": 68.1098765432,
+            "outlet_temperature_rms": 68.1098765432,
+            "inlet_pressure_rms": 68.1098765432,
+            "outlet_pressure_rms": 68.1098765432,
+            "humidite_rms": 84.1098765432,
+            "pression_rms": 26.1098765432
+        }
+        
+        
+    ]
+    
+}
