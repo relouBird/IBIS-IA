@@ -748,8 +748,27 @@ elements.forEach((element) => {
 });
 
 document.querySelector(".prediction button")?.addEventListener("click",()=>{
-  fetch("http://localhost:8000/start")
-  .then((data) => data.json())
+  async function startPredictions() {
+    try {
+        const response = await fetch('http://localhost:8000/start', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log(data);
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
+
+startPredictions();
 })
 
 document.querySelectorAll(".choice-child").forEach((elt) => {
