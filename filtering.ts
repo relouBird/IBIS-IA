@@ -43,7 +43,7 @@ document.querySelectorAll(".choice-child").forEach((elt) => {
   });
 });
 
-fetch("http://localhost:3000/rms")
+fetch("http://localhost:8000/rms_data")
   .then((data) => data.json())
   .then((r) => {
     let datas: resultData[] = r;

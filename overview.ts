@@ -14,7 +14,8 @@ fetch("http://localhost:8000/anomalies")
   .then((data) => data.json())
   .then((r) => {
     let datas: anomaliesData[] = r;
-    let tableData = document.querySelector("table")!;
+    let tableData = document.querySelector("table");
+    console.log(tableData);
     datas.forEach((element) => {
       let line = tableElement(
         element.date,
@@ -27,7 +28,7 @@ fetch("http://localhost:8000/anomalies")
         element.taux_changement,
         element.rul
       );
-      tableData.appendChild(line);
+      tableData?.appendChild(line);
     });
   });
 

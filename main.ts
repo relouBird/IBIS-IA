@@ -23,6 +23,9 @@ Chart.register(...registerables);
     OutletPressureData,
   ] = await GraphData();
 
+  let [a,b,c,d,e,f,i,j,k,l,m] = [[],[],[],[],[],[],[],[],[],[],[]]
+
+
   // gerer les graphes de overviews
   // -----------------------------------
 
@@ -744,12 +747,19 @@ elements.forEach((element) => {
   });
 });
 
+document.querySelector(".prediction button")?.addEventListener("click",()=>{
+  fetch("http://localhost:8000/start")
+  .then((data) => data.json())
+})
+
 document.querySelectorAll(".choice-child").forEach((elt) => {
   elt.addEventListener("click", (e) => {
     e.preventDefault();
     let value: string | null | undefined =
       elt.querySelector("span:last-child")?.textContent;
     if (value && value === "Overview") {
+      window.location.href = "./overview.html";
+    } else if (value && value === "Home") {
       window.location.href = "./index.html";
     } else if (value && value === "Filtering Unit") {
       window.location.href = "./filtering.html";
