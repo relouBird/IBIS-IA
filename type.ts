@@ -25,3 +25,7 @@ export interface resultData {
     pression_rms: number,
     humidite_rms: number,
 }
+
+export interface ErrorObject {
+    error?: string;
+}

@@ -26,6 +26,7 @@ Chart.register(...registerables);
   let [a,b,c,d,e,f,i,j,k,l,m] = [[],[],[],[],[],[],[],[],[],[],[]]
 
 
+
   // gerer les graphes de overviews
   // -----------------------------------
 
@@ -747,7 +748,7 @@ elements.forEach((element) => {
   });
 });
 
-document.querySelector(".prediction button")?.addEventListener("click",()=>{
+document.querySelector(".right button")?.addEventListener("click",()=>{
   async function startPredictions() {
     try {
         const response = await fetch('http://localhost:8000/start', {

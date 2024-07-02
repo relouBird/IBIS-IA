@@ -1,4 +1,4 @@
-import { resultData } from "./type";
+import { ErrorObject, resultData } from "./type";
 
 const elements3: NodeListOf<HTMLButtonElement> | null =
   document.querySelectorAll(".choice-child");
@@ -44,43 +44,48 @@ document.querySelectorAll(".choice-child").forEach((elt) => {
 fetch("http://localhost:8000/rms_data")
   .then((data) => data.json())
   .then((r) => {
-    let datas: resultData[] = r;
-    console.log(datas);
+    let datas: resultData[] | ErrorObject = r;
 
-    // ajouter des details recent dans l'appli
-    //------------------------------------------
-    let lastData = datas[datas.length - 1];
+    if (Array.isArray(datas)) {
+      // ajouter des details recent dans l'appli
+      //------------------------------------------
+      let lastData = datas[datas.length - 1];
 
-    document.querySelectorAll(".details-card").forEach((card) => {
-      if (
-        card.querySelector(".details-name")?.textContent?.trim() ==
-        "Motor Current Rotary Feeder"
-      ) {
-        card.querySelector(".details-value span")!.textContent =
-          roundLikeYouThink(lastData.courant_moteur2_rms, 3);
-      } else if (
-        card.querySelector(".details-name")?.textContent?.trim() ==
-        "Motor Torque Rotary Feeder"
-      ) {
-        card.querySelector(".details-value span")!.textContent =
-          roundLikeYouThink(lastData.charge_moteur2_rms, 3);
-      } else if (
-        card.querySelector(".details-name")?.textContent?.trim() ==
-        "Environmental Temperature"
-      ) {
-        card.querySelector(".details-value span")!.textContent =
-          roundLikeYouThink(lastData.env_temperature_rms, 3);
-      } else if (
-        card.querySelector(".details-name")?.textContent?.trim() == "Humidity"
-      ) {
-        card.querySelector(".details-value span")!.textContent =
-          roundLikeYouThink(lastData.humidite_rms, 3);
-      }
+      document.querySelectorAll(".details-card").forEach((card) => {
+        if (
+          card.querySelector(".details-name")?.textContent?.trim() ==
+          "Motor Current Rotary Feeder"
+        ) {
+          card.querySelector(".details-value span")!.textContent =
+            roundLikeYouThink(lastData.courant_moteur2_rms, 3);
+        } else if (
+          card.querySelector(".details-name")?.textContent?.trim() ==
+          "Motor Torque Rotary Feeder"
+        ) {
+          card.querySelector(".details-value span")!.textContent =
+            roundLikeYouThink(lastData.charge_moteur2_rms, 3);
+        } else if (
+          card.querySelector(".details-name")?.textContent?.trim() ==
+          "Environmental Temperature"
+        ) {
+          card.querySelector(".details-value span")!.textContent =
+            roundLikeYouThink(lastData.env_temperature_rms, 3);
+        } else if (
+          card.querySelector(".details-name")?.textContent?.trim() == "Humidity"
+        ) {
+          card.querySelector(".details-value span")!.textContent =
+            roundLikeYouThink(lastData.humidite_rms, 3);
+        }
+  
+        let time: string = lastData.timestamp.slice(0, 5) + " " + lastData.date;
+        card.querySelector(".details-time span:nth-child(2)")!.textContent =
+          lastData.timestamp.slice(0, 5);
+        card.querySelector(".details-time span:nth-child(3)")!.textContent =
+          lastData.date;
+      });
+    } else {
+      // document.querySelector(".loading")?.classList.remove("hidden");
+    }
 
-      let time: string = lastData.timestamp.slice(0, 5) + " " + lastData.date;
-      card.querySelector(".details-time span:nth-child(2)")!.textContent =
-        lastData.timestamp.slice(0, 5);
-      card.querySelector(".details-time span:nth-child(3)")!.textContent =
-        lastData.date;
-    });
+    
   });
