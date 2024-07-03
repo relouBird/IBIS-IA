@@ -1,14 +1,68 @@
 import { Chart, registerables } from "chart.js";
 import color from "./color";
 import { GraphData } from "./exportData";
-import './style.css'
+import "./style.css";
+import { chartDataType } from "./type";
 
 const elements: NodeListOf<HTMLButtonElement> | null =
   document.querySelectorAll(".choice-child");
 
 Chart.register(...registerables);
+const LM = {
+  id: "LegendMargin",
+  afterInit(chart, args, plugins) {
+    // console.log(chart.legend);
+
+    const originalFit = chart.legend?.fit;
+    chart.legend.fit = function fit() {
+      if (originalFit) {
+        originalFit.call(this);
+      }
+      return (this.height += 25);
+    };
+    // chart.legend?.right += 50;
+    // chart.legend._margins.right += 20
+  },
+};
 
 (async () => {
+  let lastMinute: string[] = ["10s", "20s", "30s", "40s", "50s", "60s"];
+  let lastHour: string[] = [
+    "10min",
+    "20min",
+    "30min",
+    "40min",
+    "50min",
+    "60min",
+  ];
+  let lastDay: string[] = [
+    "00h",
+    "",
+    "",
+    "",
+    "4h",
+    "",
+    "",
+    "",
+    "8h",
+    "",
+    "",
+    "",
+    "12h",
+    "",
+    "",
+    "",
+    "16h",
+    "",
+    "",
+    "",
+    "20h",
+    "",
+    "",
+    "",
+    "23h59",
+  ];
+
   let [
     DifferentialPressureData,
     MotorCurrentFanData,
@@ -21,102 +75,144 @@ Chart.register(...registerables);
     OutletTemperatureData,
     InletPressureData,
     OutletPressureData,
-  ] = await GraphData();
+  ] = await GraphData("all");
 
-  let [a,b,c,d,e,f,i,j,k,l,m] = [[],[],[],[],[],[],[],[],[],[],[]]
+  let chartData1: chartDataType = [
+    lastDay,
+    [
+      DifferentialPressureData,
+      MotorCurrentFanData,
+      MotorCurrentRotaryFeederData,
+    ],
+  ];
 
-
+  await GraphData("minute");
 
   // gerer les graphes de overviews
   // -----------------------------------
 
   if (document.getElementById("myChart")) {
-    new Chart(document.getElementById("myChart") as HTMLCanvasElement, {
-      type: "line",
-      data: {
-        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
-        datasets: [
-          {
-            label: "Differential Pressure",
-            data: DifferentialPressureData,
-            borderColor: color.active,
-            backgroundColor: color.active,
-            borderWidth: 2,
-            tension: 0.25,
-            pointBorderWidth: 0,
-            pointBackgroundColor: "transparent",
-            pointHoverBackgroundColor: color.active,
-          },
-          {
-            label: "Motor current fan",
-            data: MotorCurrentFanData,
-            borderColor: color.orange,
-            backgroundColor: color.orange,
-            borderWidth: 2,
-            tension: 0.25,
-            pointBorderWidth: 0,
-            pointBackgroundColor: "transparent",
-            pointHoverBackgroundColor: color.orange,
-          },
-          {
-            label: "Motor Current Rotary Feeder",
-            data: MotorCurrentRotaryFeederData,
-            borderColor: color.green,
-            backgroundColor: color.green,
-            borderWidth: 2,
-            tension: 0.25,
-            pointBorderWidth: 0,
-            pointBackgroundColor: "transparent",
-            pointHoverBackgroundColor: color.green,
-          },
-        ],
-      },
-      options: {
-        maintainAspectRatio: false,
-        responsive: true,
-        layout: {
-          padding: {},
+    const myChart = new Chart(
+      document.getElementById("myChart") as HTMLCanvasElement,
+      {
+        type: "line",
+        data: {
+          labels: chartData1[0],
+          datasets: [
+            {
+              label: "Differential Pressure",
+              data: chartData1[1][0],
+              borderColor: color.active,
+              backgroundColor: color.active,
+              borderWidth: 2,
+              tension: 0.25,
+              pointBorderWidth: 0,
+              pointBackgroundColor: "transparent",
+              pointHoverBackgroundColor: color.active,
+            },
+            {
+              label: "Motor current fan",
+              data: chartData1[1][1],
+              borderColor: color.orange,
+              backgroundColor: color.orange,
+              borderWidth: 2,
+              tension: 0.25,
+              pointBorderWidth: 0,
+              pointBackgroundColor: "transparent",
+              pointHoverBackgroundColor: color.orange,
+            },
+            {
+              label: "Motor Current Rotary Feeder",
+              data: chartData1[1][2],
+              borderColor: color.green,
+              backgroundColor: color.green,
+              borderWidth: 2,
+              tension: 0.25,
+              pointBorderWidth: 0,
+              pointBackgroundColor: "transparent",
+              pointHoverBackgroundColor: color.green,
+            },
+          ],
         },
-        scales: {
-          x: {
-            grid: {
-              display: false,
+        options: {
+          maintainAspectRatio: false,
+          responsive: true,
+          layout: {},
+          scales: {
+            x: {
+              ticks: {
+                maxRotation: 0, // Empêche l'inclinaison des étiquettes
+                minRotation: 0,
+              },
+              grid: {
+                display: false,
+              },
+              border: {
+                color: color.border,
+              },
             },
-            border: {
-              color: color.border,
-            },
-          },
-          y: {
-            grid: {
-              display: true,
-              color: color.border,
-            },
-            ticks: {
-              stepSize: 25,
-              color: "#0008",
-            },
-            border: {
-              color: "#0000",
-            },
-          },
-        },
-        plugins: {
-          legend: {
-            position: "top",
-            align: "end",
-            labels: {
-              boxHeight: 8,
-              boxWidth: 8,
-              useBorderRadius: true,
-              borderRadius: 3.5,
-              font: {
-                size: 12.5,
+            y: {
+              grid: {
+                display: true,
+                color: color.border,
+              },
+              ticks: {
+                stepSize: 25,
+                color: "#0008",
+              },
+              border: {
+                color: "#0000",
               },
             },
           },
-          tooltip: {},
+          plugins: {
+            legend: {
+              position: "top",
+              align: "center",
+              labels: {
+                boxHeight: 8,
+                boxWidth: 8,
+                useBorderRadius: true,
+                borderRadius: 3.5,
+                font: {
+                  size: 12.5,
+                },
+              },
+            },
+            tooltip: {},
+          },
         },
-      },
+        plugins: [LM],
+      }
+    );
+
+    let selectChart1: HTMLSelectElement | null =
+      document.querySelector(".chart select");
+    selectChart1?.addEventListener("change", async () => {
+      if (selectChart1.value === "day") {
+        chartData1[0] = lastDay;
+        chartData1[1][0] = DifferentialPressureData;
+        chartData1[1][1] = MotorCurrentFanData;
+        chartData1[1][2] = MotorCurrentRotaryFeederData;
+      } else if (selectChart1.value === "hour") {
+        let tempData = await GraphData("hour");
+        chartData1[0] = lastHour;
+        chartData1[1][0] = tempData[0];
+        chartData1[1][1] = tempData[1];
+        chartData1[1][2] = tempData[2];
+      } else if (selectChart1.value === "minute") {
+        let tempData = await GraphData("minute");
+        chartData1[0] = lastMinute;
+        chartData1[1][0] = tempData[0];
+        chartData1[1][1] = tempData[1];
+        chartData1[1][2] = tempData[2];
+
+      }
+      myChart.data.labels = chartData1[0];
+      myChart.data.datasets[0].data = chartData1[1][0];
+      myChart.data.datasets[1].data = chartData1[1][1];
+      myChart.data.datasets[2].data = chartData1[1][2];
+      myChart.update();
     });
   }
 
@@ -748,29 +844,29 @@ elements.forEach((element) => {
   });
 });
 
-document.querySelector(".right button")?.addEventListener("click",()=>{
+document.querySelector(".right button")?.addEventListener("click", () => {
   async function startPredictions() {
     try {
-        const response = await fetch('http://localhost:8000/start', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
+      const response = await fetch("http://localhost:8000/start", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
 
-        const data = await response.json();
-        console.log(data);
+      const data = await response.json();
+      console.log(data);
     } catch (error) {
-        console.error('Error:', error);
+      console.error("Error:", error);
     }
-}
+  }
 
-startPredictions();
-})
+  startPredictions();
+});
 
 document.querySelectorAll(".choice-child").forEach((elt) => {
   elt.addEventListener("click", (e) => {

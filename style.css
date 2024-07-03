@@ -19,19 +19,18 @@
   --grey: rgba(42, 46, 51, 1);
 }
 
-
 body {
   width: 100%;
   height: 100vh;
   display: flex;
   position: relative;
-  background: radial-gradient(circle, #D71CE7 0%,#6C4E6E 55%)
+  background: radial-gradient(circle, #d71ce7 0%, #6c4e6e 55%);
 }
 
 /*Gere le Loading*/
 /*--------------*/
 
-.loading{
+.loading {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -41,31 +40,28 @@ body {
   justify-content: center;
   align-items: center;
 }
-.loading.hidden{
+.loading.hidden {
   display: none;
 }
 
-.loading .load{
+.loading .load {
   height: 55px;
   transform: translateY(-10%);
   position: relative;
 }
 
-
-.loading .load div:nth-child(1){
+.loading .load div:nth-child(1) {
   position: absolute;
   left: -55px;
   width: 55px;
   height: 55px;
   border: 4px solid white;
-  background: #6C4E6E;
+  background: #6c4e6e;
   animation: move1 1.5s infinite;
   border-radius: 50%;
 }
 
-
-.loading .load div:nth-child(2){
-
+.loading .load div:nth-child(2) {
   position: absolute;
   left: 0;
   width: 55px;
@@ -75,39 +71,39 @@ body {
   border-radius: 50%;
 }
 @keyframes move1 {
-  50%{
+  50% {
     left: 0;
     z-index: 0;
   }
-  51%{
+  51% {
     z-index: 2;
   }
-  100%{
+  100% {
     left: -55px;
     z-index: 2;
   }
 }
 
 @keyframes move2 {
-  50%{
+  50% {
     left: -55px;
   }
-  100%{
+  100% {
     left: 0;
   }
 }
 
 /*--------------*/
 
-.body{
+.body {
   background: transparent;
 }
 
-.body .sidebar{
-  background: radial-gradient(circle, #6C4E6E 0%,#6C4E6E 55%)
+.body .sidebar {
+  background: radial-gradient(circle, #6c4e6e 0%, #6c4e6e 55%);
 }
-.body .home{
-  background: radial-gradient(circle, #D71CE7 0%,#6C4E6E 85%)
+.body .home {
+  background: radial-gradient(circle, #d71ce7 0%, #6c4e6e 85%);
 }
 
 .sidebar {
@@ -215,8 +211,6 @@ body {
   transition: 500ms all;
 }
 
-
-
 .option-child:last-child {
   color: var(--font-red);
 }
@@ -277,7 +271,7 @@ header .right {
   gap: 0.85em;
 }
 
-.right button{
+.right button {
   font-size: 15px;
   color: white;
   padding: 0.65em 2em;
@@ -383,7 +377,7 @@ header .right p {
   width: 65%;
   height: 350px;
   position: relative;
-  padding: 2.2em 1.25em 1.5em;
+  padding: 0.95em 1.25em 1.25em;
   border: 1px solid var(--border);
   border-radius: 12px;
   background: white;
@@ -394,8 +388,37 @@ header .right p {
   font-size: 20px;
   font-weight: 600;
   color: #000c;
-  top: 0.6em;
+  top: 0.75em;
   left: -7em;
+}
+
+.selectChart {
+  width: 100px;
+  border-radius: 8px;
+  cursor: pointer;
+  position: absolute;
+  top: 0.95em;
+  right: 1.5em;
+  box-shadow: 0 2px 12px 1px var(--font-blue-inactive-spread);
+}
+
+.selectChart .select1 {
+  appearance: none;
+  display: block;
+  padding: 0.6em 1em;
+  cursor: pointer;
+  width: 100px;
+}
+
+.selectChart .select1 option {
+  margin: 0.5em 0;
+}
+
+.selectChart svg {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 0;
 }
 
 .bar {
@@ -428,6 +451,10 @@ header .right p {
   gap: 1em;
   color: var(--grey);
   cursor: pointer;
+}
+
+.bar-top .bar-button:first-child span {
+  padding-right: 1.1em;
 }
 
 .bar-bottom {
@@ -479,6 +506,33 @@ header .right p {
   background: white;
 }
 
+.select {
+  width: 90px;
+  border-radius: 8px;
+  cursor: pointer;
+  position: relative;
+  box-shadow: 0 2px 12px 1px var(--font-blue-inactive-spread);
+}
+
+.select .select1 {
+  appearance: none;
+  display: block;
+  padding: 0.6em 1em;
+  cursor: pointer;
+  width: 90px;
+}
+
+.select .select1 option {
+  margin: 0.5em 0;
+}
+
+.select svg {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 0;
+}
+
 .anomalies-tab .head .but-style span:first-child {
   padding-bottom: 0.15em;
 }
@@ -514,7 +568,6 @@ table th {
   border-bottom: 1px solid var(--border);
 }
 
-
 table td {
   padding: 1em 0;
   font-size: 0.85em;
@@ -523,14 +576,13 @@ table td {
   text-align: center;
 }
 
-table tr:last-child td{
+table tr:last-child td {
   border-bottom: none;
 }
 
-
 /*-----------------------------------------------*/
 
-.graph{
+.graph {
   width: 100%;
   display: flex;
   padding: 0 1.5em;
@@ -540,20 +592,20 @@ table tr:last-child td{
   align-items: start;
 }
 
-.graph .left{
+.graph .left {
   padding-top: 2em;
   width: 65%;
 }
 
-.graph .left .chart{
+.graph .left .chart {
   width: 100%;
 }
 
-.graph .left .chart:last-child{
+.graph .left .chart:last-child {
   margin-top: 1.5em;
 }
 
-.graph .right{
+.graph .right {
   padding-top: 2em;
   width: 35%;
   display: flex;
@@ -562,19 +614,16 @@ table tr:last-child td{
   gap: 2em;
 }
 
-
-.graph .right .details-card{
+.graph .right .details-card {
   border: 1px solid var(--border);
   border-radius: 12px;
   padding: 1.75em 3em;
-
 }
-
 
 /*Gestion du home Page*/
 /*------------------------------------------------*/
 
-.prediction{
+.prediction {
   width: 100%;
   margin-top: 2.5em;
   display: flex;
@@ -582,15 +631,14 @@ table tr:last-child td{
   align-items: center;
 }
 
-.prediction img{
+.prediction img {
   width: 30%;
 }
 
-.prediction p{
+.prediction p {
   width: 50%;
   text-align: justify;
   margin-top: 0.5em;
   font-size: 15px;
   color: #fffc;
 }
-

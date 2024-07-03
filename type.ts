@@ -29,3 +29,5 @@ export interface resultData {
 export interface ErrorObject {
     error?: string;
 }
+
+export type chartDataType = [string[], number[][]]

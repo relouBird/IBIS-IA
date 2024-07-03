@@ -14,7 +14,7 @@
   <div class="loading hidden">
     <div class="load">
       <div></div>
-    <div></div>
+      <div></div>
     </div>
   </div>
 
@@ -39,9 +39,11 @@
       <div class="choice-tab">
         <button class="choice-child">
           <span><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M2.99997 13H3.99997V20C3.99997 21.103 4.89697 22 5.99997 22H18C19.103 22 20 21.103 20 20V13H21C21.1977 13 21.391 12.9413 21.5554 12.8314C21.7198 12.7215 21.848 12.5654 21.9236 12.3827C21.9993 12.2 22.0191 11.9989 21.9806 11.805C21.942 11.611 21.8468 11.4329 21.707 11.293L12.707 2.293C12.6142 2.20005 12.504 2.12632 12.3827 2.07601C12.2613 2.02569 12.1313 1.9998 12 1.9998C11.8686 1.9998 11.7386 2.02569 11.6173 2.07601C11.496 2.12632 11.3858 2.20005 11.293 2.293L2.29297 11.293C2.15316 11.4329 2.05795 11.611 2.01939 11.805C1.98082 11.9989 2.00062 12.2 2.07629 12.3827C2.15196 12.5654 2.2801 12.7215 2.44451 12.8314C2.60892 12.9413 2.80222 13 2.99997 13ZM9.99997 20V15H14V20H9.99997ZM12 4.414L18 10.414V15L18.001 20H16V15C16 13.897 15.103 13 14 13H9.99997C8.89697 13 7.99997 13.897 7.99997 15V20H5.99997V10.414L12 4.414Z" fill="black"/>
+              <path
+                d="M2.99997 13H3.99997V20C3.99997 21.103 4.89697 22 5.99997 22H18C19.103 22 20 21.103 20 20V13H21C21.1977 13 21.391 12.9413 21.5554 12.8314C21.7198 12.7215 21.848 12.5654 21.9236 12.3827C21.9993 12.2 22.0191 11.9989 21.9806 11.805C21.942 11.611 21.8468 11.4329 21.707 11.293L12.707 2.293C12.6142 2.20005 12.504 2.12632 12.3827 2.07601C12.2613 2.02569 12.1313 1.9998 12 1.9998C11.8686 1.9998 11.7386 2.02569 11.6173 2.07601C11.496 2.12632 11.3858 2.20005 11.293 2.293L2.29297 11.293C2.15316 11.4329 2.05795 11.611 2.01939 11.805C1.98082 11.9989 2.00062 12.2 2.07629 12.3827C2.15196 12.5654 2.2801 12.7215 2.44451 12.8314C2.60892 12.9413 2.80222 13 2.99997 13ZM9.99997 20V15H14V20H9.99997ZM12 4.414L18 10.414V15L18.001 20H16V15C16 13.897 15.103 13 14 13H9.99997C8.89697 13 7.99997 13.897 7.99997 15V20H5.99997V10.414L12 4.414Z"
+                fill="black" />
             </svg>
-            
+
           </span>
           <span>Home</span>
         </button>
@@ -276,19 +278,33 @@
     <div class="graphs">
       <div class="chart">
         <div class="title">Graphs</div>
+        <div class="selectChart">
+          <select name="select" class="select1" id="mySelectChart">
+            <option value="day" selected>Last Day</option>
+            <option value="hour">Last Hour</option>
+            <option value="minute">Last Minute</option>
+          </select>
+          <span><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M4.26595 6.26595C4.48725 6.04465 4.84604 6.04465 5.06734 6.26595L7.99998 9.19859L10.9326 6.26595C11.1539 6.04465 11.5127 6.04465 11.734 6.26595C11.9553 6.48725 11.9553 6.84604 11.734 7.06734L8.40067 10.4007C8.17937 10.622 7.82058 10.622 7.59928 10.4007L4.26595 7.06734C4.04465 6.84604 4.04465 6.48725 4.26595 6.26595Z"
+                fill="#7C8DB5" />
+            </svg>
+          </span>
+        </div>
         <canvas id="myChart" width="100" height="40"></canvas>
+        
       </div>
 
       <div class="bar">
         <div class="bar-top">
           <button class="bar-button">
-            <span>Metric</span>
-            <span><svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <span>Metric </span>
+            <!-- <span><svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
                   d="M9.8575 11.1004C10.3854 11.6283 11.2412 11.6283 11.769 11.1004L14.6366 8.23281C14.9885 7.88096 15.5589 7.88096 15.9108 8.23281C16.2626 8.58466 16.2626 9.15512 15.9108 9.50696L11.769 13.6487C11.2412 14.1766 10.3853 14.1766 9.8575 13.6487L5.71574 9.50696C5.36389 9.15512 5.36389 8.58466 5.71574 8.23281C6.06759 7.88096 6.63805 7.88096 6.98989 8.23281L9.8575 11.1004Z"
                   fill="#2A2E33" />
               </svg>
-            </span>
+            </span> -->
           </button>
           <button class="bar-button">
             <span>Today</span>
@@ -310,7 +326,7 @@
       <div class="anomalies-tab">
         <div class="head">
           <p>Anomaly List</p>
-          <button class="but-style">
+          <!-- <button class="but-style">
             <span>Monthly</span>
             <span><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" clip-rule="evenodd"
@@ -318,7 +334,21 @@
                   fill="#7C8DB5" />
               </svg>
             </span>
-          </button>
+          </button> -->
+          <div class="select">
+            <select name="select" class="select1" id="mySelect">
+              <option value="all">All</option>
+              <option value="minute">Minutes</option>
+              <option value="hour">Hours</option>
+              <option value="day">Days</option>
+            </select>
+            <span><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd"
+                  d="M4.26595 6.26595C4.48725 6.04465 4.84604 6.04465 5.06734 6.26595L7.99998 9.19859L10.9326 6.26595C11.1539 6.04465 11.5127 6.04465 11.734 6.26595C11.9553 6.48725 11.9553 6.84604 11.734 7.06734L8.40067 10.4007C8.17937 10.622 7.82058 10.622 7.59928 10.4007L4.26595 7.06734C4.04465 6.84604 4.04465 6.48725 4.26595 6.26595Z"
+                  fill="#7C8DB5" />
+              </svg>
+            </span>
+          </div>
         </div>
         <div class="table">
           <table>
