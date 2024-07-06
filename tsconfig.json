@@ -19,7 +19,10 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "paths": {
+      "@socketio/*": ["https://cdn.socket.io/4.7.5/socket.io.esm.min.js"],
+    }
   },
   "include": ["vite.config.ts"],
 }

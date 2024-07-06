@@ -14,6 +14,7 @@
     "vite": "^5.3.1"
   },
   "dependencies": {
+    "@types/socket.io-client": "^3.0.0",
     "chart.js": "^4.4.3"
   }
 }

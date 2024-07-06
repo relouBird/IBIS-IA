@@ -1,5 +1,9 @@
 import { ErrorObject, resultData } from "./type";
 
+import { io } from "https://cdn.socket.io/4.7.5/socket.io.esm.min.js";
+
+const socket = io("http://127.0.0.1:7000/");
+
 const elements: NodeListOf<HTMLButtonElement> | null =
   document.querySelectorAll(".choice-child");
 
@@ -41,10 +45,13 @@ document.querySelectorAll(".choice-child").forEach((elt) => {
   });
 });
 
-fetch("http://localhost:8000/rms_data")
-  .then((data) => data.json())
-  .then((r) => {
-    let datas: resultData[] | ErrorObject = r;
+
+socket.on("connect", () => {
+  console.log("Connected to server");
+});
+
+socket.on("rms_data",(data: {data: resultData[] | ErrorObject})=>{
+  let datas: resultData[] | ErrorObject = data.data;
 
     if (Array.isArray(datas)) {
       // ajouter des details recent dans l'appli
@@ -86,4 +93,10 @@ fetch("http://localhost:8000/rms_data")
     } else {
       // document.querySelector(".loading")?.classList.remove("hidden");
     }
-  });
+})
+
+
+socket.on("disconnect", () => {
+  console.log("Disconnected from server");
+});
+

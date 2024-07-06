@@ -3,6 +3,10 @@ import { ErrorObject, resultData } from "./type";
 const elements3: NodeListOf<HTMLButtonElement> | null =
   document.querySelectorAll(".choice-child");
 
+  import { io } from "https://cdn.socket.io/4.7.5/socket.io.esm.min.js";
+
+  const socket = io("http://127.0.0.1:7000/");
+
 let roundLikeYouThink = (numb: number, times: number): string => {
   let iterator = 1;
   for (let i = 1; i <= times; i++) {
@@ -41,10 +45,12 @@ document.querySelectorAll(".choice-child").forEach((elt) => {
   });
 });
 
-fetch("http://localhost:8000/rms_data")
-  .then((data) => data.json())
-  .then((r) => {
-    let datas: resultData[] | ErrorObject = r;
+socket.on("connect", () => {
+  console.log("Connected to server");
+});
+
+socket.on("rms_data",(data: {data: resultData[] | ErrorObject})=>{
+  let datas: resultData[] | ErrorObject = data.data;
 
     if (Array.isArray(datas)) {
       // ajouter des details recent dans l'appli
@@ -87,5 +93,9 @@ fetch("http://localhost:8000/rms_data")
       // document.querySelector(".loading")?.classList.remove("hidden");
     }
 
-    
-  });
+})
+
+socket.on("disconnect", () => {
+  console.log("Disconnected from server");
+});
+

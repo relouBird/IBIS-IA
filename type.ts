@@ -30,4 +30,16 @@ export interface ErrorObject {
     error?: string;
 }
 
+export interface datasetType {
+    label: string;
+    data: number[];
+    borderColor: string;
+    backgroundColor: string;
+    borderWidth: number;
+    tension: number;
+    pointBorderWidth: number;
+    pointBackgroundColor: string;
+    pointHoverBackgroundColor: string;
+}
+
 export type chartDataType = [string[], number[][]]

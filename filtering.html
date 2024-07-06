@@ -179,12 +179,38 @@
 
         <div class="graph">
             <div class="left">
-                <div class="chart">
+                <div class="chart chart2">
                     <div class="title">Graphs</div>
+                    <div class="selectChart">
+                        <select name="select" class="select1" id="mySelectChart">
+                          <option value="day" selected>Last Day</option>
+                          <option value="hour">Last Hour</option>
+                          <option value="minute">Last Minute</option>
+                        </select>
+                        <span><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                              d="M4.26595 6.26595C4.48725 6.04465 4.84604 6.04465 5.06734 6.26595L7.99998 9.19859L10.9326 6.26595C11.1539 6.04465 11.5127 6.04465 11.734 6.26595C11.9553 6.48725 11.9553 6.84604 11.734 7.06734L8.40067 10.4007C8.17937 10.622 7.82058 10.622 7.59928 10.4007L4.26595 7.06734C4.04465 6.84604 4.04465 6.48725 4.26595 6.26595Z"
+                              fill="#7C8DB5" />
+                          </svg>
+                        </span>
+                      </div>
                     <canvas id="myChart2" width="100" height="40"></canvas>
                 </div>
-                <div class="chart">
+                <div class="chart chart3">
                     <div class="title">Graphs</div>
+                    <div class="selectChart">
+                        <select name="select" class="select1" id="mySelectChart2">
+                          <option value="day" selected>Last Day</option>
+                          <option value="hour">Last Hour</option>
+                          <option value="minute">Last Minute</option>
+                        </select>
+                        <span><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                              d="M4.26595 6.26595C4.48725 6.04465 4.84604 6.04465 5.06734 6.26595L7.99998 9.19859L10.9326 6.26595C11.1539 6.04465 11.5127 6.04465 11.734 6.26595C11.9553 6.48725 11.9553 6.84604 11.734 7.06734L8.40067 10.4007C8.17937 10.622 7.82058 10.622 7.59928 10.4007L4.26595 7.06734C4.04465 6.84604 4.04465 6.48725 4.26595 6.26595Z"
+                              fill="#7C8DB5" />
+                          </svg>
+                        </span>
+                      </div>
                     <canvas id="myChart3" width="100" height="40"></canvas>
                 </div>
             </div>

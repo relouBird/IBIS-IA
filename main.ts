@@ -1,8 +1,23 @@
 import { Chart, registerables } from "chart.js";
 import color from "./color";
-import { GraphData } from "./exportData";
 import "./style.css";
-import { chartDataType } from "./type";
+import { ErrorObject, chartDataType, resultData } from "./type";
+
+import { io } from "https://cdn.socket.io/4.7.5/socket.io.esm.min.js";
+import dataExport from "./exportData.ts";
+import {
+  barChartCreation,
+  barChartUpdate,
+  lineChartCreation,
+  lineChartUpdate,
+} from "./chartConfigCreation";
+
+const socket = io("http://127.0.0.1:7000/");
+
+const loading = document.querySelector(".loading");
+if(!document.querySelector(".prediction")){
+  loading?.classList.remove("hidden");
+}
 
 const elements: NodeListOf<HTMLButtonElement> | null =
   document.querySelectorAll(".choice-child");
@@ -63,772 +78,162 @@ const LM = {
     "23h59",
   ];
 
-  let [
-    DifferentialPressureData,
-    MotorCurrentFanData,
-    MotorCurrentRotaryFeederData,
-    MotorTorqueFanData,
-    MotorTorqueRotaryFeederData,
-    EnvironmentalTempertureData,
-    HumidityData,
-    InletTemperatureData,
-    OutletTemperatureData,
-    InletPressureData,
-    OutletPressureData,
-  ] = await GraphData("all");
-
-  let chartData1: chartDataType = [
-    lastDay,
-    [
-      DifferentialPressureData,
-      MotorCurrentFanData,
-      MotorCurrentRotaryFeederData,
-    ],
-  ];
-
-  await GraphData("minute");
+  // creation des variable acceuillant les graphes
+  let myChart: Chart<"line", number[], string>;
+  let myChart2: Chart<"line", number[], string>;
+  let myChart3: Chart<"line", number[], string>;
+  let myChart4: Chart<"line", number[], string>;
+  let myChart5: Chart<"line", number[], string>;
+  let myChart6: Chart<"line", number[], string>;
+  let myChart7: Chart<"line", number[], string>;
+  let myBarChart: Chart<"bar", number[], string>;
 
   // gerer les graphes de overviews
   // -----------------------------------
 
   if (document.getElementById("myChart")) {
-    const myChart = new Chart(
+    myChart = lineChartCreation(
       document.getElementById("myChart") as HTMLCanvasElement,
-      {
-        type: "line",
-        data: {
-          labels: chartData1[0],
-          datasets: [
-            {
-              label: "Differential Pressure",
-              data: chartData1[1][0],
-              borderColor: color.active,
-              backgroundColor: color.active,
-              borderWidth: 2,
-              tension: 0.25,
-              pointBorderWidth: 0,
-              pointBackgroundColor: "transparent",
-              pointHoverBackgroundColor: color.active,
-            },
-            {
-              label: "Motor current fan",
-              data: chartData1[1][1],
-              borderColor: color.orange,
-              backgroundColor: color.orange,
-              borderWidth: 2,
-              tension: 0.25,
-              pointBorderWidth: 0,
-              pointBackgroundColor: "transparent",
-              pointHoverBackgroundColor: color.orange,
-            },
-            {
-              label: "Motor Current Rotary Feeder",
-              data: chartData1[1][2],
-              borderColor: color.green,
-              backgroundColor: color.green,
-              borderWidth: 2,
-              tension: 0.25,
-              pointBorderWidth: 0,
-              pointBackgroundColor: "transparent",
-              pointHoverBackgroundColor: color.green,
-            },
-          ],
-        },
-        options: {
-          maintainAspectRatio: false,
-          responsive: true,
-          layout: {},
-          scales: {
-            x: {
-              ticks: {
-                maxRotation: 0, // Empêche l'inclinaison des étiquettes
-                minRotation: 0,
-              },
-              grid: {
-                display: false,
-              },
-              border: {
-                color: color.border,
-              },
-            },
-            y: {
-              grid: {
-                display: true,
-                color: color.border,
-              },
-              ticks: {
-                stepSize: 25,
-                color: "#0008",
-              },
-              border: {
-                color: "#0000",
-              },
-            },
-          },
-          plugins: {
-            legend: {
-              position: "top",
-              align: "center",
-              labels: {
-                boxHeight: 8,
-                boxWidth: 8,
-                useBorderRadius: true,
-                borderRadius: 3.5,
-                font: {
-                  size: 12.5,
-                },
-              },
-            },
-            tooltip: {},
-          },
-        },
-        plugins: [LM],
-      }
+      [
+        "Differential Pressure",
+        "Motor current fan",
+        "Motor Current Rotary Feeder",
+      ]
     );
-
-    let selectChart1: HTMLSelectElement | null =
-      document.querySelector(".chart select");
-    selectChart1?.addEventListener("change", async () => {
-      if (selectChart1.value === "day") {
-        chartData1[0] = lastDay;
-        chartData1[1][0] = DifferentialPressureData;
-        chartData1[1][1] = MotorCurrentFanData;
-        chartData1[1][2] = MotorCurrentRotaryFeederData;
-      } else if (selectChart1.value === "hour") {
-        let tempData = await GraphData("hour");
-        chartData1[0] = lastHour;
-        chartData1[1][0] = tempData[0];
-        chartData1[1][1] = tempData[1];
-        chartData1[1][2] = tempData[2];
-      } else if (selectChart1.value === "minute") {
-        let tempData = await GraphData("minute");
-        chartData1[0] = lastMinute;
-        chartData1[1][0] = tempData[0];
-        chartData1[1][1] = tempData[1];
-        chartData1[1][2] = tempData[2];
-
-      }
-      myChart.data.labels = chartData1[0];
-      myChart.data.datasets[0].data = chartData1[1][0];
-      myChart.data.datasets[1].data = chartData1[1][1];
-      myChart.data.datasets[2].data = chartData1[1][2];
-      myChart.update();
-    });
-  }
-
-  if (document.getElementById("myBar")) {
-    let [s1, s2, s3] = [0, 0, 0];
-    for (let i = 0; i < MotorCurrentFanData.length; i++) {
-      s1 += DifferentialPressureData[i];
-      s2 += MotorCurrentFanData[i];
-      s3 += MotorCurrentRotaryFeederData[i];
-    }
-
-    new Chart(document.getElementById("myBar") as HTMLCanvasElement, {
-      type: "bar",
-      data: {
-        labels: [""],
-        datasets: [
-          {
-            label: "Pressure",
-            data: [s1],
-            borderColor: color.active,
-            backgroundColor: color.active,
-            barPercentage: 0.6,
-            borderWidth: 2,
-          },
-          {
-            label: "Motor current fan",
-            data: [s2],
-            borderColor: color.orange,
-            backgroundColor: color.orange,
-            barPercentage: 0.6,
-            borderWidth: 2,
-          },
-          {
-            label: "Motor Current Rotary Feeder",
-            data: [s3],
-            borderColor: color.green,
-            backgroundColor: color.green,
-            barPercentage: 0.6,
-            borderWidth: 2,
-          },
-        ],
-      },
-      options: {
-        maintainAspectRatio: false,
-        responsive: true,
-        layout: {
-          padding: {},
-        },
-        scales: {
-          x: {
-            grid: {
-              display: false,
-            },
-            border: {
-              color: "#0000",
-            },
-          },
-          y: {
-            grid: {
-              display: false,
-              color: color.border,
-            },
-            ticks: {
-              stepSize: 25,
-              color: "#0000",
-            },
-            border: {
-              color: "#0000",
-            },
-          },
-        },
-        plugins: {
-          legend: {
-            position: "bottom",
-            align: "start",
-            labels: {
-              boxHeight: 8,
-              boxWidth: 8,
-              useBorderRadius: true,
-              borderRadius: 3.5,
-              font: {
-                size: 12.5,
-              },
-            },
-          },
-          tooltip: {},
-        },
-      },
-    });
+    myBarChart = barChartCreation(
+      document.getElementById("myBar") as HTMLCanvasElement
+    );
   }
 
   // gerer les graphes de filtering
   // -----------------------------------
-
   if (document.getElementById("myChart2")) {
-    new Chart(document.getElementById("myChart2") as HTMLCanvasElement, {
-      type: "line",
-      data: {
-        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
-        datasets: [
-          {
-            label: "Differential Pressure",
-            data: DifferentialPressureData,
-            borderColor: color.active,
-            backgroundColor: color.active,
-            borderWidth: 2,
-            tension: 0.25,
-            pointBorderWidth: 0,
-            pointBackgroundColor: "transparent",
-            pointHoverBackgroundColor: color.active,
-          },
-          {
-            label: "Inlet Pressure",
-            data: InletPressureData,
-            borderColor: color.orange,
-            backgroundColor: color.orange,
-            borderWidth: 2,
-            tension: 0.25,
-            pointBorderWidth: 0,
-            pointBackgroundColor: "transparent",
-            pointHoverBackgroundColor: color.orange,
-          },
-          {
-            label: "Outlet Pressure",
-            data: OutletPressureData,
-            borderColor: color.green,
-            backgroundColor: color.green,
-            borderWidth: 2,
-            tension: 0.25,
-            pointBorderWidth: 0,
-            pointBackgroundColor: "transparent",
-            pointHoverBackgroundColor: color.green,
-          },
-          {
-            label: "Humidity",
-            data: HumidityData,
-            borderColor: color.secondary,
-            backgroundColor: color.secondary,
-            borderWidth: 2,
-            tension: 0.25,
-            pointBorderWidth: 0,
-            pointBackgroundColor: "transparent",
-            pointHoverBackgroundColor: color.secondary,
-          },
-        ],
-      },
-      options: {
-        maintainAspectRatio: false,
-        responsive: true,
-        layout: {
-          padding: {},
-        },
-        scales: {
-          x: {
-            grid: {
-              display: false,
-            },
-            border: {
-              color: color.border,
-            },
-          },
-          y: {
-            grid: {
-              display: true,
-              color: color.border,
-            },
-            ticks: {
-              stepSize: 25,
-              color: "#0008",
-            },
-            border: {
-              color: "#0000",
-            },
-          },
-        },
-        plugins: {
-          legend: {
-            position: "top",
-            align: "end",
-            labels: {
-              boxHeight: 8,
-              boxWidth: 8,
-              useBorderRadius: true,
-              borderRadius: 3.5,
-              font: {
-                size: 12.5,
-              },
-            },
-          },
-          tooltip: {},
-        },
-      },
-    });
+    myChart2 = lineChartCreation(
+      document.getElementById("myChart2") as HTMLCanvasElement,
+      ["Differential Pressure", "Inlet Pressure", "Outlet Pressure"]
+    );
   }
 
   if (document.getElementById("myChart3")) {
-    new Chart(document.getElementById("myChart3") as HTMLCanvasElement, {
-      type: "line",
-      data: {
-        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
-        datasets: [
-          {
-            label: "Motor current fan",
-            data: MotorCurrentFanData,
-            borderColor: color.active,
-            backgroundColor: color.active,
-            borderWidth: 2,
-            tension: 0.25,
-            pointBorderWidth: 0,
-            pointBackgroundColor: "transparent",
-            pointHoverBackgroundColor: color.active,
-          },
-          {
-            label: "Motor current rotary feeder",
-            data: MotorCurrentRotaryFeederData,
-            borderColor: color.orange,
-            backgroundColor: color.orange,
-            borderWidth: 2,
-            tension: 0.25,
-            pointBorderWidth: 0,
-            pointBackgroundColor: "transparent",
-            pointHoverBackgroundColor: color.orange,
-          },
-          {
-            label: "Inlet temperature",
-            data: InletTemperatureData,
-            borderColor: color.green,
-            backgroundColor: color.green,
-            borderWidth: 2,
-            tension: 0.25,
-            pointBorderWidth: 0,
-            pointBackgroundColor: "transparent",
-            pointHoverBackgroundColor: color.green,
-          },
-          {
-            label: "Outlet temperature",
-            data: OutletTemperatureData,
-            borderColor: color.secondary,
-            backgroundColor: color.secondary,
-            borderWidth: 2,
-            tension: 0.25,
-            pointBorderWidth: 0,
-            pointBackgroundColor: "transparent",
-            pointHoverBackgroundColor: color.secondary,
-          },
-        ],
-      },
-      options: {
-        maintainAspectRatio: false,
-        responsive: true,
-        layout: {
-          padding: {},
-        },
-        scales: {
-          x: {
-            grid: {
-              display: false,
-            },
-            border: {
-              color: color.border,
-            },
-          },
-          y: {
-            grid: {
-              display: true,
-              color: color.border,
-            },
-            ticks: {
-              stepSize: 25,
-              color: "#0008",
-            },
-            border: {
-              color: "#0000",
-            },
-          },
-        },
-        plugins: {
-          legend: {
-            position: "top",
-            align: "end",
-            labels: {
-              boxHeight: 8,
-              boxWidth: 8,
-              useBorderRadius: true,
-              borderRadius: 3.5,
-              font: {
-                size: 12.5,
-              },
-            },
-          },
-          tooltip: {},
-        },
-      },
-    });
+    myChart3 = lineChartCreation(
+      document.getElementById("myChart3") as HTMLCanvasElement,
+      [
+        "Motor current fan",
+        "Motor current rotary feeder",
+        "Inlet temperature",
+        "Outlet temperature",
+      ]
+    );
   }
 
   // gerer les graphes de fan
   // -----------------------------------
   if (document.getElementById("myChart4")) {
-    new Chart(document.getElementById("myChart4") as HTMLCanvasElement, {
-      type: "line",
-      data: {
-        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
-        datasets: [
-          {
-            label: "Motor current fan",
-            data: MotorCurrentFanData,
-            borderColor: color.green,
-            backgroundColor: color.green,
-            borderWidth: 2,
-            tension: 0.25,
-            pointBorderWidth: 0,
-            pointBackgroundColor: "transparent",
-            pointHoverBackgroundColor: color.green,
-          },
-          {
-            label: "Motor torque fan",
-            data: MotorTorqueFanData,
-            borderColor: color.secondary,
-            backgroundColor: color.secondary,
-            borderWidth: 2,
-            tension: 0.25,
-            pointBorderWidth: 0,
-            pointBackgroundColor: "transparent",
-            pointHoverBackgroundColor: color.secondary,
-          },
-        ],
-      },
-      options: {
-        maintainAspectRatio: false,
-        responsive: true,
-        layout: {
-          padding: {},
-        },
-        scales: {
-          x: {
-            grid: {
-              display: false,
-            },
-            border: {
-              color: color.border,
-            },
-          },
-          y: {
-            grid: {
-              display: true,
-              color: color.border,
-            },
-            ticks: {
-              stepSize: 25,
-              color: "#0008",
-            },
-            border: {
-              color: "#0000",
-            },
-          },
-        },
-        plugins: {
-          legend: {
-            position: "top",
-            align: "end",
-            labels: {
-              boxHeight: 8,
-              boxWidth: 8,
-              useBorderRadius: true,
-              borderRadius: 3.5,
-              font: {
-                size: 12.5,
-              },
-            },
-          },
-          tooltip: {},
-        },
-      },
-    });
+    myChart4 = lineChartCreation(
+      document.getElementById("myChart4") as HTMLCanvasElement,
+      ["Motor current fan", "Motor torque fan"]
+    );
   }
-
   if (document.getElementById("myChart5")) {
-    new Chart(document.getElementById("myChart5") as HTMLCanvasElement, {
-      type: "line",
-      data: {
-        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
-        datasets: [
-          {
-            label: "Environmental temperature",
-            data: EnvironmentalTempertureData,
-            borderColor: color.orange,
-            backgroundColor: color.orange,
-            borderWidth: 2,
-            tension: 0.25,
-            pointBorderWidth: 0,
-            pointBackgroundColor: "transparent",
-            pointHoverBackgroundColor: color.orange,
-          },
-          {
-            label: "Humidity",
-            data: HumidityData,
-            borderColor: color.green,
-            backgroundColor: color.green,
-            borderWidth: 2,
-            tension: 0.25,
-            pointBorderWidth: 0,
-            pointBackgroundColor: "transparent",
-            pointHoverBackgroundColor: color.green,
-          },
-        ],
-      },
-      options: {
-        maintainAspectRatio: false,
-        responsive: true,
-        layout: {
-          padding: {},
-        },
-        scales: {
-          x: {
-            grid: {
-              display: false,
-            },
-            border: {
-              color: color.border,
-            },
-          },
-          y: {
-            grid: {
-              display: true,
-              color: color.border,
-            },
-            ticks: {
-              stepSize: 25,
-              color: "#0008",
-            },
-            border: {
-              color: "#0000",
-            },
-          },
-        },
-        plugins: {
-          legend: {
-            position: "top",
-            align: "end",
-            labels: {
-              boxHeight: 8,
-              boxWidth: 8,
-              useBorderRadius: true,
-              borderRadius: 3.5,
-              font: {
-                size: 12.5,
-              },
-            },
-          },
-          tooltip: {},
-        },
-      },
-    });
+    myChart5 = lineChartCreation(
+      document.getElementById("myChart5") as HTMLCanvasElement,
+      ["Environmental temperature", "Humidity"]
+    );
   }
 
   // gerer les graphes de rotary feeder
   // -----------------------------------
-
   if (document.getElementById("myChart6")) {
-    new Chart(document.getElementById("myChart6") as HTMLCanvasElement, {
-      type: "line",
-      data: {
-        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
-        datasets: [
-          {
-            label: "Motor current rotary feeder",
-            data: MotorCurrentRotaryFeederData,
-            borderColor: color.active,
-            backgroundColor: color.active,
-            borderWidth: 2,
-            tension: 0.25,
-            pointBorderWidth: 0,
-            pointBackgroundColor: "transparent",
-            pointHoverBackgroundColor: color.active,
-          },
-          {
-            label: "Motor torque rotary feeder",
-            data: MotorTorqueRotaryFeederData,
-            borderColor: color.secondary,
-            backgroundColor: color.secondary,
-            borderWidth: 2,
-            tension: 0.25,
-            pointBorderWidth: 0,
-            pointBackgroundColor: "transparent",
-            pointHoverBackgroundColor: color.secondary,
-          },
-        ],
-      },
-      options: {
-        maintainAspectRatio: false,
-        responsive: true,
-        layout: {
-          padding: {},
-        },
-        scales: {
-          x: {
-            grid: {
-              display: false,
-            },
-            border: {
-              color: color.border,
-            },
-          },
-          y: {
-            grid: {
-              display: true,
-              color: color.border,
-            },
-            ticks: {
-              stepSize: 25,
-              color: "#0008",
-            },
-            border: {
-              color: "#0000",
-            },
-          },
-        },
-        plugins: {
-          legend: {
-            position: "top",
-            align: "end",
-            labels: {
-              boxHeight: 8,
-              boxWidth: 8,
-              useBorderRadius: true,
-              borderRadius: 3.5,
-              font: {
-                size: 12.5,
-              },
-            },
-          },
-          tooltip: {},
-        },
-      },
-    });
+    myChart6 = lineChartCreation(
+      document.getElementById("myChart6") as HTMLCanvasElement,
+      ["Motor current rotary feeder", "Motor torque rotary feeder"]
+    );
   }
 
   if (document.getElementById("myChart7")) {
-    new Chart(document.getElementById("myChart7") as HTMLCanvasElement, {
-      type: "line",
-      data: {
-        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
-        datasets: [
-          {
-            label: "Environmental Temperature",
-            data: EnvironmentalTempertureData,
-            borderColor: color.orange,
-            backgroundColor: color.orange,
-            borderWidth: 2,
-            tension: 0.25,
-            pointBorderWidth: 0,
-            pointBackgroundColor: "transparent",
-            pointHoverBackgroundColor: color.orange,
-          },
-          {
-            label: "Humidity",
-            data: HumidityData,
-            borderColor: color.secondary,
-            backgroundColor: color.secondary,
-            borderWidth: 2,
-            tension: 0.25,
-            pointBorderWidth: 0,
-            pointBackgroundColor: "transparent",
-            pointHoverBackgroundColor: color.secondary,
-          },
-        ],
-      },
-      options: {
-        maintainAspectRatio: false,
-        responsive: true,
-        layout: {
-          padding: {},
-        },
-        scales: {
-          x: {
-            grid: {
-              display: false,
-            },
-            border: {
-              color: color.border,
-            },
-          },
-          y: {
-            grid: {
-              display: true,
-              color: color.border,
-            },
-            ticks: {
-              stepSize: 25,
-              color: "#0008",
-            },
-            border: {
-              color: "#0000",
-            },
-          },
-        },
-        plugins: {
-          legend: {
-            position: "top",
-            align: "end",
-            labels: {
-              boxHeight: 8,
-              boxWidth: 8,
-              useBorderRadius: true,
-              borderRadius: 3.5,
-              font: {
-                size: 12.5,
-              },
-            },
-          },
-          tooltip: {},
-        },
-      },
-    });
+    myChart7 = lineChartCreation(
+      document.getElementById("myChart7") as HTMLCanvasElement,
+      ["Environmental Temperature", "Humidity"]
+    );
   }
+
+  socket.on("rms_data", (data: { data: resultData[] | ErrorObject }) => {
+    if (Array.isArray(data.data)) {
+      let data1: number[][] = dataExport("all", data.data);
+      let data2: number[][] = dataExport("hour", data.data);
+      let data3: number[][] = dataExport("minute", data.data);
+
+      let allData: number[][][] = [data1, data2, data3];
+
+      if (document.getElementById("myChart")) {
+        lineChartUpdate(
+          myChart,
+          document.querySelector(".chart select"),
+          allData,
+          [0, 1, 2]
+        );
+        barChartUpdate(myBarChart, allData);
+      }
+
+      if (document.getElementById("myChart2")) {
+        lineChartUpdate(
+          myChart2,
+          document.querySelector(".chart2 select"),
+          allData,
+          [0, 9, 10]
+        );
+      }
+
+      if (document.getElementById("myChart3")) {
+        lineChartUpdate(
+          myChart3,
+          document.querySelector(".chart3 select"),
+          allData,
+          [1, 2, 7, 8]
+        );
+      }
+
+      if (document.getElementById("myChart4")) {
+        lineChartUpdate(
+          myChart4,
+          document.querySelector(".chart4 select"),
+          allData,
+          [1, 3]
+        );
+      }
+
+      if (document.getElementById("myChart5")) {
+        lineChartUpdate(
+          myChart5,
+          document.querySelector(".chart5 select"),
+          allData,
+          [5, 6]
+        );
+      }
+
+      if (document.getElementById("myChart6")) {
+        lineChartUpdate(
+          myChart6,
+          document.querySelector(".chart6 select"),
+          allData,
+          [2, 4]
+        );
+      }
+
+      if (document.getElementById("myChart7")) {
+        lineChartUpdate(
+          myChart7,
+          document.querySelector(".chart7 select"),
+          allData,
+          [5, 6]
+        );
+      }
+
+      loading?.classList.add("hidden")
+    } else{
+      console.log("no data");
+    }
+  });
 })();
 
 elements.forEach((element) => {
@@ -866,6 +271,7 @@ document.querySelector(".right button")?.addEventListener("click", () => {
   }
 
   startPredictions();
+  // socket.emit('start',"launch")
 });
 
 document.querySelectorAll(".choice-child").forEach((elt) => {
