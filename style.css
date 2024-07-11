@@ -92,6 +92,73 @@ body {
     left: 0;
   }
 }
+/*Gere les popup */
+/*----------------*/
+.pop {
+  position: absolute;
+  bottom: 5%;
+  right: 0;
+  width: 20%;
+  z-index: 5;
+  height: 150px;
+  background: #0000;
+}
+
+.popup {
+  width: 87%;
+  height: 110px;
+  border-radius: 6px;
+  background: white;
+  padding: 0.5em;
+  box-shadow: 0px 0px 3px 2px #0001;
+  animation: scaleTransformation 500ms ease-in-out;
+}
+.close{
+  width: 100%;
+  display: flex;
+  cursor: pointer;
+  flex-direction: row-reverse;
+}
+
+.type{
+  padding-top: 7px;
+}
+
+.type p{
+  width: 80%;
+  margin: auto;
+}
+
+.type p:first-child{
+  color: #ff3b30;
+}
+
+.type p:last-child{
+  padding-top: 6px;
+  text-align: right;
+  transform: translateX(7px);
+  font-size: 12px;
+}
+
+@keyframes scaleTransformation {
+  0% {
+    transform: scale(0%);
+  }
+  100% {
+    transform: scale(100%);
+  }
+}
+
+@keyframes scaleDetransformation {
+  0% {
+    transform: scale(100%);
+  }
+  100% {
+    transform: scale(0%);
+  }
+}
+
+/*----------------*/
 
 /*--------------*/
 

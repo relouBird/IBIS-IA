@@ -120,8 +120,8 @@ const LM = {
       [
         "Motor current fan",
         "Motor current rotary feeder",
-        "Inlet temperature",
-        "Outlet temperature",
+        "Inlet temp°",
+        "Outlet temp°",
       ]
     );
   }
